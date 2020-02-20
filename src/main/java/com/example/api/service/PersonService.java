@@ -26,5 +26,14 @@ public class PersonService {
         return repository.findById(id).orElseThrow(NoResultException::new);
     }
 
+    public Person post(Person person){
+        Optional.ofNullable(person).orElseThrow(InvalidParameterException::new);
+        return repository.save(person);
+    }
+
+    public void delete(Long id){
+        Optional.ofNullable(id).orElseThrow(InvalidParameterException::new);
+        repository.deleteById(id);
+    }
 
 }
