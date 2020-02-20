@@ -1,0 +1,9 @@
+server:
+    servlet:
+        context-path: /v1/api
+springdoc:
+    swagger-ui:
+        path: index.html
+    api-docs:
+        path: /docs
+        enable: true
