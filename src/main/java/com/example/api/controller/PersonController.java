@@ -59,11 +59,4 @@ public class PersonController {
         person.setId(id);
         return ResponseEntity.ok(converter.map(service.partialUpdate(person), PersonResponse.class));
     }
-
-//    @PatchMapping(value="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<PersonResponse> patch2(@PathVariable("id") Long id, @Valid @RequestBody PersonPartialUpdate personUpdate){
-//        Person person = service.find(id);
-//        person.setNome("Alguma coisa aqui");
-//        return ResponseEntity.ok(converter.map(service.partialUpdate(person), PersonResponse.class));
-//    }
 }
