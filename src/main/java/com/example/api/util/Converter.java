@@ -5,7 +5,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.security.InvalidParameterException;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
@@ -37,6 +40,17 @@ public class Converter {
         Optional.ofNullable(destiny).orElseThrow(InvalidParameterException::new);
         Optional.ofNullable(modelMapper).orElseThrow(InvalidParameterException::new);
         modelMapper.map(source, destiny);
+    }
+
+    public <S, D> List<D> mapAll(Collection<S> sources, Class<D> destinationType){
+        return mapAll(sources, destinationType, modelMapperFactory.modelMapperMatchingStrategyStrict());
+    }
+
+    public <S, D> List<D> mapAll(Collection<S>sources, Class<D> destinationType, ModelMapper modelMapper){
+        Optional.ofNullable(sources).orElseThrow(InvalidParameterException::new);
+        Optional.ofNullable(destinationType).orElseThrow(InvalidParameterException::new);
+        Optional.ofNullable(modelMapper).orElseThrow(InvalidParameterException::new);
+        return sources.parallelStream().map( element -> modelMapper.map(element, destinationType)).collect(Collectors.toList());
     }
 
 }

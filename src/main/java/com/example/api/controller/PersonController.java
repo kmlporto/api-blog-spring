@@ -27,8 +27,8 @@ public class PersonController {
     private final Converter converter;
 
     @GetMapping
-    public List<Person> get() {
-        return service.findAll();
+    public ResponseEntity<List<PersonResponse>> get() {
+        return ResponseEntity.ok(converter.mapAll(service.findAll(), PersonResponse.class));
     }
 
     @PostMapping
