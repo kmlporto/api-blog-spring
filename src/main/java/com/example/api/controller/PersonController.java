@@ -31,19 +31,20 @@ public class PersonController {
         return ResponseEntity.ok(converter.mapAll(service.findAll(), PersonResponse.class));
     }
 
-    @PostMapping
-    public Person post(@Valid @RequestBody Person person){
-        return service.save(person);
+    @GetMapping("/{id}")
+    public ResponseEntity<PersonResponse> get(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(converter.map(service.find(id), PersonResponse.class));
     }
 
-    @GetMapping("/{id}")
-    public Person get(@PathVariable("id") Long id) {
-        return service.find(id);
+    @PostMapping
+    public ResponseEntity<PersonResponse> post(@Valid @RequestBody Person person){
+        return ResponseEntity.ok(converter.map(service.save(person), PersonResponse.class));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id")Long id){
+    public ResponseEntity delete(@PathVariable("id")Long id){
         service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping(value="/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
